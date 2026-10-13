@@ -801,6 +801,12 @@ async fn main() -> Result<()> {
                     list_item.push_str(&text);
                 }
             }
+            // A code span is item text too, but it arrives as its own event, not as Text.
+            Event::Code(text) => {
+                if in_list_item {
+                    list_item.push_str(&text);
+                }
+            }
             Event::End(tag) => {
                 match tag {
                     Tag::Heading(_) => {
