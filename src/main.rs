@@ -798,6 +798,13 @@ async fn main() -> Result<()> {
                     list_item.push_str(&text);
                 }
             }
+            Event::Code(text) => {
+                // Inline code is part of what the item reads as, so the template and sorting
+                // checks need it in list_item just like plain text.
+                if in_list_item {
+                    list_item.push_str(&text);
+                }
+            }
             Event::End(tag) => {
                 match tag {
                     Tag::Heading(_) => {
